@@ -1,6 +1,6 @@
 import argparse
 from pathlib import Path
-
+import math
 
 def main() -> None:
     parser = argparse.ArgumentParser()
@@ -21,6 +21,12 @@ def main() -> None:
                 stations[name][1] = stations[name][1] + temperature
                 stations[name][2] = max(stations[name][2], temperature)
                 stations[name][3] += 1
+
+    for name in stations:
+        average_temperature = stations[name][1] / stations[name][3]
+        half_up_temperature = math.floor(average_temperature * 10 + 0.5) / 10
+        stations[name][1] = half_up_temperature
+        stations[name].pop(3)
 
 if __name__ == "__main__":
     main()
