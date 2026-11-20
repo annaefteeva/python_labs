@@ -28,5 +28,15 @@ def main() -> None:
         stations[name][1] = half_up_temperature
         stations[name].pop(3)
 
+    sorted_stations = sorted(stations)
+
+    for name in sorted_stations:
+        min_temperature = stations[name][0]
+        mean_temperature = stations[name][1]
+        max_temperature = stations[name][2]
+        print(f"{name}: min {min_temperature:.1f} "
+              f"mean {mean_temperature:.1f} "
+              f"max {max_temperature:.1f}")
+
 if __name__ == "__main__":
     main()
