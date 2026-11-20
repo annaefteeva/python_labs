@@ -43,9 +43,8 @@ def main() -> None:
         min_temperature = stations[name][0]
         mean_temperature = stations[name][1]
         max_temperature = stations[name][2]
-        print(f"{name}: min {min_temperature:.1f} "
-              f"mean {mean_temperature:.1f} "
-              f"max {max_temperature:.1f}")
+        print(f"{name};{min_temperature:.1f};"
+              f"{mean_temperature:.1f};{max_temperature:.1f}")
 
 if __name__ == "__main__":
     main()
