@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+import sys
 import math
 
 def main() -> None:
@@ -9,18 +10,26 @@ def main() -> None:
 
     stations = dict()
 
-    with open(args.path, "r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            name, temperature = line.split(";")
-            temperature = float(temperature)
-            if name not in stations:
-                stations[name] = [temperature, temperature, temperature, 1]
-            else:
-                stations[name][0] = min(stations[name][0], temperature)
-                stations[name][1] = stations[name][1] + temperature
-                stations[name][2] = max(stations[name][2], temperature)
-                stations[name][3] += 1
+    try:
+        with open(args.path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                name, temperature = line.split(";")
+                temperature = float(temperature)
+                if name not in stations:
+                    stations[name] = [temperature, temperature, temperature, 1]
+                else:
+                    stations[name][0] = min(stations[name][0], temperature)
+                    stations[name][1] = stations[name][1] + temperature
+                    stations[name][2] = max(stations[name][2], temperature)
+                    stations[name][3] += 1
+    except FileNotFoundError:
+        print("Файл не найден", file=sys.stderr)
+        return
+
+    except OSError:
+        print("Не удалось открыть или прочитать файл", file=sys.stderr)
+        return
 
     for name in stations:
         average_temperature = stations[name][1] / stations[name][3]
